@@ -6,14 +6,12 @@ use std::fs;
 fn puzzle1(passports: &Vec<&str>) -> u32 {
     let re = Regex::new(r"(\w*):(\S*)").unwrap();
     let mut valid = 0;
-    let mut fields: Vec<String> = Vec::new();
     for passport in passports.iter() {
         // println!("Next passport:");
-        fields.clear();
-        for cap in re.captures_iter(passport) {
-            // println!("{:?}",cap);
-            fields.push(cap[1].to_owned());
-        }
+        let fields = re
+            .captures_iter(passport)
+            .map(|x| x[1].to_owned())
+            .collect::<Vec<String>>();
         if fields.iter().any(|e| e == "byr")
             && fields.iter().any(|e| e == "iyr")
             && fields.iter().any(|e| e == "eyr")
@@ -31,14 +29,12 @@ fn puzzle1(passports: &Vec<&str>) -> u32 {
 fn puzzle2(passports: &Vec<&str>) -> u32 {
     let re = Regex::new(r"(\w*):(\S*)").unwrap();
     let mut valid = 0;
-    let mut fields = HashMap::new();
-    for (_i,passport) in passports.iter().enumerate() {
+    for passport in passports.iter() {
         // println!("Next passport:");
-        fields.clear();
-        for cap in re.captures_iter(passport) {
-            // println!("{:?}",cap);
-            fields.insert(cap[1].to_owned(), cap[2].to_owned());
-        }
+        let fields = re
+            .captures_iter(passport)
+            .map(|x| (x[1].to_owned(), x[2].to_owned()))
+            .collect::<HashMap<String, String>>();
         if fields.keys().any(|e| e == "byr")
             && fields.keys().any(|e| e == "iyr")
             && fields.keys().any(|e| e == "eyr")
@@ -84,11 +80,7 @@ fn main() {
     println!("reading file {}", filename);
 
     let content = fs::read_to_string(filename).expect("Something went wrong reading the file");
-
-    let mut passports: Vec<&str> = Vec::new();
-    for line in content.split("\n\n") {
-        passports.push(line);
-    }
+    let passports: Vec<&str> = content.split("\n\n").collect();
 
     // println!("{:?}", passports);
     let valid = puzzle1(&passports);

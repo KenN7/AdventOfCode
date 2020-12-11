@@ -14,16 +14,10 @@ def puzzle2(c):
                 if i3+i1+i2 == 2020:
                     print(f"{i1} * {i2} * {i3} = {i3*i1*i2} ")
 
-
-
 def main():
     name = sys.argv[1]
     print(f"reading file {name}")
-    
-    content = []
-    for it in open(name):
-        content.append(int(it))
-
+    content = [int(i) for i in open(name)]
     puzzle1(content)
     puzzle2(content)
 

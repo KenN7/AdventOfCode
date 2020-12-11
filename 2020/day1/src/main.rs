@@ -36,10 +36,7 @@ fn main() {
 
     let contents = fs::read_to_string(filename).expect("Something went wrong reading the file");
 
-    let mut results: Vec<i32> = Vec::new();
-    for line in contents.lines() {
-        results.push(line.parse().unwrap());
-    }
+    let results: Vec<i32> = contents.lines().map(|x| x.parse().unwrap()).collect();
     //println!("{:?}", results);
 
     puzzle1(&results);
@@ -47,7 +44,8 @@ fn main() {
 }
 
 // ________________________________________________________
-// Executed in   33,33 secs   fish           external 
-//    usr time   32,83 secs  124,88 millis   32,71 secs 
-//    sys time    0,20 secs   55,06 millis    0,15 secs 
+//      Executed in    8,08 secs   fish           external 
+//         usr time    7,38 secs   53,27 millis    7,33 secs 
+//         sys time    0,69 secs   38,52 millis    0,65 secs 
+
 

@@ -43,9 +43,7 @@ fn puzzle2(data: &[&str]) {
                 .map(|x| mask.len() - 1 - x.0)
                 .collect();
             let m = u64::from_str_radix(&mask.replace('X', "1"), 2).unwrap();
-            for res in gen_comb(addr | m, x_ind).iter() {
-                memory.insert(res.to_owned(), num);
-            }
+            memory.extend(gen_comb(addr | m, x_ind).iter().map(|x| (x.to_owned(),num) ));
         }
     }
     // println!("{:?}", memory);

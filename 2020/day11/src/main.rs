@@ -29,8 +29,7 @@ fn adjacents(data: &Array2<char>, i: usize, j: usize) -> usize {
 fn get_seat(data: &Array2<char>, mut i: i32, mut j: i32, dir: &(i32, i32)) -> char {
     j += dir.1;
     i += dir.0;
-    while data.get((i as usize, j as usize)).is_some() {
-        let c = data.get((i as usize, j as usize)).unwrap();
+    while let Some(c) = data.get((i as usize, j as usize)) {
         if c == &'#' {
             return '#';
         } else if c == &'L' {

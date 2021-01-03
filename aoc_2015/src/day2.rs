@@ -1,12 +1,8 @@
+use crate::input;
 use itertools::Itertools;
-use std::env;
-use std::fs;
 
 pub fn day2() {
-    let args: Vec<String> = env::args().collect();
-    let filename = &args[1];
-    println!("reading file {}", filename);
-    let contents = fs::read_to_string(filename).expect("Something went wrong reading the file");
+    let contents = input::load_day_file("day2.txt");
 
     let data: Vec<Vec<i32>> = contents
         .lines()

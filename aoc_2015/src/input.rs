@@ -1,13 +1,16 @@
 use std::fs;
 use std::path::PathBuf;
+use std::time::Instant;
+
+pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 pub struct Day {
     name: String,
-    func: Option<fn()>,
+    func: Option<fn() -> Result<()>>,
 }
 
 impl Day {
-    pub fn new(name: &str, func: fn()) -> Self {
+    pub fn new(name: &str, func: fn() -> Result<()>) -> Self {
         Day {
             name: name.to_string(),
             func: Some(func),
@@ -16,8 +19,15 @@ impl Day {
 
     pub fn run(&self) {
         println!("------ {} ------", self.name);
-        (self.func.unwrap())();
-        println!()
+        let start = Instant::now();
+        match (self.func.unwrap())() {
+            Ok(_) => (),
+            Err(e) => panic!("⚠️ Error: {}, executing {}", e, self.name),
+        }
+        let duration = start.elapsed();
+        println!();
+        println!("⏱️  of exec: {:?}", duration);
+        println!();
     }
 }
 

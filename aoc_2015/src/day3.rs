@@ -1,7 +1,7 @@
 use crate::input;
 use std::collections::HashMap;
 
-pub fn day3() {
+pub fn day3() -> input::Result<()> {
     let contents = input::load_day_file("day3.txt");
     let mut map: HashMap<(i32, i32), i32> = HashMap::new();
     let mut pos = (0, 0);
@@ -42,4 +42,5 @@ pub fn day3() {
         "Santa 🎅 and Robo-Santa 🤖 delivered {} 🏠 houses.",
         map.iter().count()
     );
+    Ok(())
 }

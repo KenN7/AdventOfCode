@@ -1,13 +1,21 @@
 use crate::input;
-use itertools::Itertools;
+// use itertools::Itertools;
 
-pub fn day2() {
+pub fn day2() -> input::Result<()> {
     let contents = input::load_day_file("day2.txt");
 
-    let data: Vec<Vec<i32>> = contents
+    // This impl is a little bit faster but does not handle well errors
+    // let data: Vec<Vec<i32>> = contents
+    //     .lines()
+    //     .map(|x| x.split('x').map(|x| x.parse().unwrap()).sorted().collect())
+    //     .collect();
+
+    let mut data = contents
         .lines()
-        .map(|x| x.split('x').map(|x| x.parse().unwrap()).sorted().collect())
-        .collect();
+        .map(|x| x.split('x').map(|x| x.parse()).collect())
+        .collect::<Result<Vec<Vec<i32>>, _>>()?;
+    data.iter_mut().for_each(|x| x.sort());
+
     // Vec l x w x h, sorted
     // 2*l*w + 2*w*h + 2*h*l + smallest area
 
@@ -28,4 +36,5 @@ pub fn day2() {
         "Total ribbon needed 🎀: {} ft",
         total_rb.iter().sum::<i32>()
     );
+    Ok(())
 }

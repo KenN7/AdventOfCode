@@ -1,10 +1,10 @@
 use crate::input;
 use onig::Regex;
 
-pub fn day5() {
+pub fn day5() -> input::Result<()> {
     let contents = input::load_day_file("day5.txt");
     let mut count = 0;
-    let re_d = Regex::new(r"([a-z])\1").unwrap();
+    let re_d = Regex::new(r"([a-z])\1")?;
     for line in contents.lines() {
         let nice_v = line
             .chars()
@@ -25,11 +25,12 @@ pub fn day5() {
     }
     println!("Nb of nice 🤗 strings: {}", count);
 
-    let re_aba = Regex::new(r"([a-z]).\1").unwrap();
-    let re_dd = Regex::new(r"([a-z][a-z]).*\1").unwrap();
+    let re_aba = Regex::new(r"([a-z]).\1")?;
+    let re_dd = Regex::new(r"([a-z][a-z]).*\1")?;
     let part2 = contents
         .lines()
         .filter(|x| re_dd.find(x).is_some() && re_aba.find(x).is_some());
 
     println!("Nb of very nice 🤗 strings: {}", part2.count());
+    Ok(())
 }

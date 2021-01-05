@@ -1,6 +1,7 @@
+use crate::input;
 use md5::{Digest, Md5};
 
-pub fn day4() {
+pub fn day4() -> input::Result<()> {
     let contents = String::from("bgvyzdsv");
 
     let mut i = 1;
@@ -23,4 +24,5 @@ pub fn day4() {
         }
         i += 1;
     }
+    Ok(())
 }

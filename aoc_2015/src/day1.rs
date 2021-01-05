@@ -1,7 +1,7 @@
 use crate::input;
 use std::collections::HashMap;
 
-pub fn day1() {
+pub fn day1() -> input::Result<()> {
     let contents = input::load_day_file("day1.txt");
     let mut map = HashMap::new();
     let mut first = true;
@@ -15,6 +15,7 @@ pub fn day1() {
     }
     println!(
         "Floor 🏠: {} ",
-        map.get(&'(').unwrap() - map.get(&')').unwrap()
+        map.get(&'(').ok_or("get error")? - map.get(&')').ok_or("get error")?
     );
+    Ok(())
 }

@@ -1,4 +1,6 @@
 mod day1;
+mod day10;
+mod day11;
 mod day2;
 mod day3;
 mod day4;
@@ -22,7 +24,9 @@ fn main() {
         // Day::new("Day 6", day6::day6),
         // Day::new("Day 7", day7::day7),
         // Day::new("Day 8", day8::day8),
-        Day::new("Day 9", day9::day9),
+        // Day::new("Day 9", day9::day9),
+        // Day::new("Day 10", day10::day10),
+        Day::new("Day 11", day11::day11),
     ];
     for day in days.iter() {
         day.run();

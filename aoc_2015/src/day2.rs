@@ -14,7 +14,7 @@ pub fn day2() -> input::Result<()> {
         .lines()
         .map(|x| x.split('x').map(|x| x.parse()).collect())
         .collect::<Result<Vec<Vec<i32>>, _>>()?;
-    data.iter_mut().for_each(|x| x.sort());
+    data.iter_mut().for_each(|x| x.sort_unstable());
 
     // Vec l x w x h, sorted
     // 2*l*w + 2*w*h + 2*h*l + smallest area

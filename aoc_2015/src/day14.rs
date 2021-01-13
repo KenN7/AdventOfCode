@@ -44,7 +44,7 @@ pub fn day14() -> input::Result<()> {
             }
         }
 
-        let best_dist = deers_dist.iter().max_by_key(|x| x.1).unwrap().1.clone();
+        let best_dist = *deers_dist.iter().max_by_key(|x| x.1).unwrap().1;
         deers_dist
             .iter()
             .filter(|x| *x.1 == best_dist)

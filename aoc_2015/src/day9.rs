@@ -23,7 +23,7 @@ pub fn day9() -> input::Result<()> {
                 let old = i;
                 indexes.push(cap.at(1).unwrap());
                 i += 1;
-                return old;
+                old
             });
         let n2 = *names
             .entry(cap.at(2).ok_or("No group 2")?)
@@ -31,7 +31,7 @@ pub fn day9() -> input::Result<()> {
                 let old = i;
                 indexes.push(cap.at(2).unwrap());
                 i += 1;
-                return old;
+                old
             });
         let dist = cap.at(3).ok_or("No group 3")?.parse::<u32>()?;
         graph[[n1, n2]] = dist;

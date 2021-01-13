@@ -20,7 +20,7 @@ impl PwdGenerator {
         while c == 'z' {
             self.chars[len] = 'a';
             if len == 0 {
-                self.chars.insert(0, ('a' as u8 - 1) as char);
+                self.chars.insert(0, (b'a' as u8 - 1) as char);
                 break;
             }
             len -= 1;
@@ -47,7 +47,7 @@ fn is_pwd_valid(s: &str, re: &Regex, abc: &Vec<String>) -> bool {
         return false;
     } else if abc.iter().all(|e| !s.contains(e)) {
         return false;
-    } else if !re.find(s).is_some() {
+    } else if re.find(s).is_none() {
         return false;
     }
     true

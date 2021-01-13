@@ -33,6 +33,5 @@ impl Day {
 
 pub fn load_day_file(filename: &str) -> String {
     let path: PathBuf = ["data/", filename].iter().collect();
-    let contents = fs::read_to_string(path).expect("Something went wrong reading the file");
-    contents
+    fs::read_to_string(path).expect("Something went wrong reading the file")
 }

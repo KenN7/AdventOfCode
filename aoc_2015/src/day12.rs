@@ -21,8 +21,7 @@ pub fn day12() -> input::Result<()> {
                     .as_object()
                     .unwrap()
                     .values()
-                    .collect::<Vec<_>>()
-                    .contains(&&Value::String("red".to_string()))
+                    .any(|x| x == &Value::String("red".to_string()))
             {
                 for a in v.as_object().unwrap().values() {
                     ret += recur(a, p1);

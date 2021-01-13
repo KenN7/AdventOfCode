@@ -30,7 +30,7 @@ pub fn day7() -> input::Result<()> {
                         .parse::<u16>()
                         .unwrap_or_else(|_| recur(circuit, op, cache));
                 } else if eq.contains("OR") || eq.contains("AND") {
-                    let op: Vec<_> = eq.split(" ").collect();
+                    let op: Vec<_> = eq.split(' ').collect();
                     let op1 = op[0]
                         .parse::<u16>()
                         .unwrap_or_else(|_| recur(circuit, op[0], cache));
@@ -54,7 +54,7 @@ pub fn day7() -> input::Result<()> {
             }
         }
         cache.insert(eq.to_string(), ret);
-        return ret;
+        ret
     }
 
     let mut cache = HashMap::new();

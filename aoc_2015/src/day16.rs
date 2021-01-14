@@ -58,7 +58,7 @@ pub fn day16() -> input::Result<()> {
 
     let filtered_map = filter_by(&map, &to_filter, |a, b| -> bool { a == b });
     println!(
-        "First guess of 👵 Aunt Sue is: {:?}",
+        "First guess of 👵 Aunt Sue is: {}",
         filtered_map.iter().next().unwrap().0
     );
 
@@ -80,7 +80,7 @@ pub fn day16() -> input::Result<()> {
     filtered_map = filter_by(&filtered_map, &filter_lt, |a, b| -> bool { a < b });
 
     println!(
-        "Second guess of 👵 Aunt Sue is: {:?}",
+        "Second guess of 👵 Aunt Sue is: {}",
         filtered_map.iter().next().unwrap().0
     );
 

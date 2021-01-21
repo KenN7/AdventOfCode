@@ -12,6 +12,10 @@ mod day19;
 mod day2;
 mod day20;
 mod day21;
+mod day22;
+mod day23;
+mod day24;
+mod day25;
 mod day3;
 mod day4;
 mod day5;
@@ -46,7 +50,11 @@ fn main() {
         // Day::new("Day 18", day18::day18),
         // Day::new("Day 19", day19::day19),
         // Day::new("Day 20", day20::day20),
-        Day::new("Day 21", day21::day21),
+        // Day::new("Day 21", day21::day21),
+        // Day::new("Day 22", day22::day22),
+        Day::new("Day 23", day23::day23),
+        // Day::new("Day 24", day24::day24),
+        // Day::new("Day 25", day25::day25),
     ];
     for day in days.iter() {
         day.run();

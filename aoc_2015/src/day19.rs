@@ -1,6 +1,6 @@
 use crate::input;
-// use rand::{self, Rng};
-use std::collections::HashSet;
+use rand::{self, Rng};
+use std::collections::{HashMap, HashSet};
 
 pub fn day19() -> input::Result<()> {
     let contents = input::load_day_file("day19.txt");
@@ -25,32 +25,32 @@ pub fn day19() -> input::Result<()> {
 
     println!("Calibrated {} 🧪 molecules 🦌.", mol_set.len());
 
-    // ----------------- test greedy biggest replacement ------------
-    // let mut rng = rand::thread_rng();
-    let mut mol = molecule.to_string();
-    let mut step = 0;
-    loop {
-        if mol == "e" {
-            break;
-        }
-        let mut max = ("", "");
-        for t in transforms.iter() {
-            if mol.match_indices(t.1).count() > 0 {
-                if t.1.len() > max.1.len() {
-                    max = *t;
-                }
-            }
-        }
+    //     // ----------------- test greedy biggest replacement ------------
+    //     let mut rng = rand::thread_rng();
+    //     let mut mol = molecule.to_string();
+    //     let mut step = 0;
+    //     loop {
+    //         if mol == "e" {
+    //             break;
+    //         }
+    //         let mut max = ("", "");
+    //         for t in transforms.iter() {
+    //             if mol.match_indices(t.1).count() > 0 {
+    //                 if t.1.len() > max.1.len() {
+    //                     max = *t;
+    //                 }
+    //             }
+    //         }
 
-        let m = mol.match_indices(max.1).next().unwrap();
-        // with rng or without rng, no change in solution.
-        // let n = rng.gen_range(0..mol.match_indices(max.1).count());
-        // let m = mol.match_indices(max.1).nth(n).unwrap();
-        mol = mol[..m.0].to_string() + max.0 + &mol[m.0 + max.1.len()..];
-        // println!("{} - {}", mol, step);
-        step += 1;
-    }
-    println!("Reconstructed 🧪 molecule in {} steps 🥼.", step);
+    //         // let m = mol.match_indices(max.1).next().unwrap();
+    //         // with rng or without rng, no change in solution.
+    //         let n = rng.gen_range(0..mol.match_indices(max.1).count());
+    //         let m = mol.match_indices(max.1).nth(n).unwrap();
+    //         mol = mol[..m.0].to_string() + max.0 + &mol[m.0 + max.1.len()..];
+    //         println!("{} - {} - {}", mol, step, n);
+    //         step += 1;
+    //     }
+    // println!("Reconstructed 🧪 molecule in {} steps 🥼.", step);
 
     // ----------------- test of A* --------------------------
     // let mut ways = vec!["e".to_string()];
@@ -106,29 +106,46 @@ pub fn day19() -> input::Result<()> {
     // }
 
     // ------------ test of recursion: ---------------
-    // fn recur(mol: &str, goal: &str, step: u32, trans: &Vec<(&str, &str)>) -> Vec<u32> {
-    //     // println!("{} - {}", mol, step);
-    //     if mol == goal {
-    //         return vec![step];
-    //     } else if mol.len() > goal.len() {
-    //         return vec![];
-    //     }
-    //     let mut ways = Vec::new();
-    //     let possibles = trans.iter().filter(|x| mol.contains(x.0));
-    //     for p in possibles {
-    //         for m in mol.match_indices(p.0) {
-    //             let mol_new = mol[..m.0].to_string() + p.1 + &mol[m.0 + p.0.len()..];
-    //             ways.extend(recur(&mol_new, goal, step + 1, trans));
-    //         }
-    //     }
-    //     ways
-    // }
-    // let steps = recur("e", molecule, 0, &transforms);
+    let mut cache = HashMap::new();
+    fn recur(
+        mol: &str,
+        goal: &str,
+        step: u32,
+        trans: &Vec<(&str, &str)>,
+        cache: &mut HashMap<String, Vec<u32>>,
+    ) -> Vec<u32> {
+        // println!("{} - {}", mol, step);
+        if mol == goal {
+            return vec![step];
+        }
+        if cache.contains_key(mol) {
+            return cache.get(&mol.to_string()).unwrap().clone();
+        }
+        let mut ways = Vec::new();
+        let mut possibles = trans
+            .iter()
+            .filter(|x| mol.contains(x.1))
+            .collect::<Vec<_>>();
+        possibles.sort_unstable_by_key(|x| x.1.len());
+        'out: for p in possibles.iter().rev() {
+            for m in mol.rmatch_indices(p.1) {
+                let mol_new = mol[..m.0].to_string() + p.0 + &mol[m.0 + p.1.len()..];
+                ways.extend(recur(&mol_new, goal, step + 1, trans, cache));
+                if !ways.is_empty() {
+                    break 'out;
+                }
+            }
+        }
+        // println!("{} - {} ", mol, step);
+        cache.insert(mol.to_string(), ways.clone());
+        ways
+    }
+    let steps = recur(molecule, "e", 0, &transforms, &mut cache);
 
-    // println!(
-    //     "We need {} steps to make the molecule.",
-    //     steps.iter().min().unwrap()
-    // );
+    println!(
+        "We need {} steps to make the molecule.",
+        steps.iter().min().unwrap()
+    );
 
     Ok(())
 }

@@ -53,8 +53,8 @@ fn main() {
         // Day::new("Day 21", day21::day21),
         // Day::new("Day 22", day22::day22),
         // Day::new("Day 23", day23::day23),
-        Day::new("Day 24", day24::day24),
-        // Day::new("Day 25", day25::day25),
+        // Day::new("Day 24", day24::day24),
+        Day::new("Day 25", day25::day25),
     ];
     for day in days.iter() {
         day.run();
